@@ -6,7 +6,7 @@ log2R_samples<-function(x){
 }
 
 # Note: this is not the GATK version:
-# DataFrames Format: Chrom, Start, End, Host name 1, Host name 2, ...)
+# DataFrames Format: Chrom, Start, End, Sample name 1, Sample name 2, ...)
 
 PCA_normalization<-function(host_df, tumor_df){
 
