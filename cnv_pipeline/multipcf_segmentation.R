@@ -22,48 +22,49 @@ library(aCGH)
     unique_haplos<-plyr::count(haplos$Groups)
 
  # Run Multiseg based on Haplogroups:
-    multiseg_list<-list()
-    multiseg_estimates<-list()
+    mseg_list<-list()
+    mseg_est<-list()
 
   for(x in which(unique_haplos[,2]>1)){
         # Run Multipcf on A Haplogroup      
-        multiseg<-copynumber::multipcf(tumors.pcf[,c(1,2,which(gsub("X", "", colnames(tumors.pcf)) %in% 
-                                                            haplos$Sample.TCG_ID[which(haplos$Groups %in% 
+        multiseg<-copynumber::multipcf(tumors.pcf[,c(1,2,which(colnames(tumors.pcf) %in% haplos$Sample.TCG_ID[which(haplos$Groups %in% 
                                                                                   unique_haplos[x,1])]))], 
                                         arms=chrom.arm, 
                                         gamma = 50,
                                         return.est = TRUE)
       
         # Add Data to List
-        multiseg_list[[unique_haplos[x,1]]]<-as.data.frame(multiseg$segments)
-        multiseg_estimates[[unique_haplos[x,1]]]<-as.data.frame(multiseg$estimates)
+        #mseg_list[[unique_haplos[x,1]]]<-as.data.frame(mseg$segments)
+        mseg_est[[unique_haplos[x,1]]]<-as.data.frame(mseg$estimates)
   
   }
-        multiseg_list<-multiseg_list[unlist(lapply(multiseg_list, length) != 0)]
-        multiseg_estimates<-multiseg_estimates[unlist(lapply(multiseg_estimates, length) != 0)]
+        #mseg_list<-mseg_list[unlist(lapply(mseg_list, length) != 0)]
+        mseg_est<-mseg_est[unlist(lapply(mseg_est, length) != 0)]
 
 
 # Step 4: Compile Multisegmentation across All Haplogroups and Reduce & Sort Matrix
-        multiseg_compiled<-Reduce(function(x, y) merge(x, y, all = TRUE), 
-                            multiseg_estimates)
-        multiseg_compiled<-multiseg_compiled[order(multiseg_compiled$pos),]
-        multiseg_compiled<-multiseg_compiled[order(multiseg_compiled$chrom),]
+        mseg_comp<-Reduce(function(x, y) merge(x, y, all = TRUE), 
+                            mseg_est)
+        mseg_comp<-mseg_comp[order(mseg_comp$pos),]
+        mseg_comp<-mseg_comp[order(mseg_comp$chrom),]
 
 
 # Step 5: Perform Ansari/Bradley Tests (pval<.05) for Preliminary Merging for Each Sample
-for(y in unique(colnames(multiseg_compiled)[3:ncol(multiseg_compiled)])){
+for(y in unique(colnames(mseg_comp)[3:ncol(mseg_comp)])){
+    
     message(y)
-        if(!is.na(match(y, colnames(multiseg_compiled)))){
-            multiseg_compiled[,y]<-mergeLevels(tumors.pcf[, y], 
-                                               multiseg_compiled[,y], 
+    
+        if(!is.na(match(y, colnames(mseg_comp)))){
+            mseg_comp[,y]<-mergeLevels(tumors.pcf[, y], 
+                                               mseg_comp[,y], 
                                                verbose = FALSE)$vecMerged
             }
     }
 
 
 # Step 6: Reformat Data Frames for CN calling assignments
-    multiseg_compiled$end<-multiseg_compiled$pos+99999
-    colnames(multiseg_compiled)[1:2]<-c("seqnames", "start")
+    mseg_comp$end<-mseg_comp$pos+99999
+    colnames(mseg_comp)[1:2]<-c("seqnames", "start")
 
-    multiseg_compiled<-makeGRangesFromDataFrame(multiseg_compiled, 
-                                                keep.extra.columns = TRUE)
+    mseg_comp<-makeGRangesFromDataFrame(mseg_comp, 
+                                        keep.extra.columns = TRUE)
