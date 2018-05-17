@@ -103,7 +103,11 @@ void main(string[] argv)
         auto ref_id = bam.ref_id(refname);
         ulong pos_1based = to!ulong(spl[1]);
         auto pos_0based = pos_1based - 1;
-
+        //add the umi distance
+        ulong umi_0based = to!ulong(spl[2]);
+        auto umi_1based_for = pos_1based + umi_0based;
+        auto umi_1based_rev = pos_1based - umi_0based;
+        
         if (ref_id != curr_ref) {
             curr_ref = ref_id;
             pileup = makePileup(bam.reference(curr_ref)[1 .. uint.max]);
@@ -141,6 +145,8 @@ void main(string[] argv)
                     .sort!((a, b) => a.sequence.to!string[$-5 .. $] < b.sequence.to!string[$-5 .. $])
                     .filter!(read => !read.is_reverse_strand())
                     .chunkBy!((a, b) => a.sequence.to!string[$-5 .. $] == b.sequence.to!string[$-5 .. $]);
+                     // Test:
+                     // 
 
                 auto reverse_chunks = column.reads
                     .sort!((a, b) => a.sequence.to!string[0 .. 5] < b.sequence.to!string[0 .. 5])
