@@ -6,10 +6,11 @@ VCFLISTDIR=$1
 OUTDIR=$2
 
 	ls -1 $VCFLISTDIR/final*multiallelic.vcf > $OUTDIR/vcflist.txt
-while read FILE; do
-echo "$FILE"
-Rscript 5_Variants_filtering.R $FILE $OUTDIR
+	
+	while read FILE; do
+		echo "$FILE"
+		Rscript 5_Variants_filtering.R $FILE $OUTDIR
 
-bgzip $FILE
+		bgzip $FILE
 
-done<$OUTDIR/vcflist.txt
+	done<$OUTDIR/vcflist.txt
