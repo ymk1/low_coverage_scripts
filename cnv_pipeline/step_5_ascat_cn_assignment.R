@@ -25,7 +25,7 @@ objective <- function(x) {
 
 # CN State
 cn_call <- function(x, ct, p){
-  cn <- ((2*exp(x)-p*(1-ct))/ct
+  cn <- (2*exp(x)-p*(1-ct))/ct
   round(cn)
  }
 
