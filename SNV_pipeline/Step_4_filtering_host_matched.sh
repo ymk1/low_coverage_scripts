@@ -55,18 +55,18 @@ while read NAME; do
 				# Call Using Platypus (don't use regions here, actually takes longer)		
 		    			Platypus.py callVariants \
             					--logFileName=$OUTDIR/"${NAME%.*}"_default.log \
-           			 		  --refFile=$REFERENCE \
+           			 		--refFile=$REFERENCE \
           		  			--bamFiles=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}.bamlist.txt \
             					--minReads=1 \
-	   					        --minFlank=0 \
-	    					      --minBaseQual=30 \
+	   					--minFlank=0 \
+	    					--minBaseQual=30 \
             					--filteredReadsFrac=.8 \
 		            			--badReadsThreshold=30 \
     		        			--badReadsWindow=15 \
-   			         		  --minPosterior=0 \
-	   			 		        --getVariantsFromBAMs=0 \
-	   			 		        --source=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}_to.genotype.vcf.gz \
-         			   		  --nCPU=8 \
+   			         		--minPosterior=0 \
+	   			 		--getVariantsFromBAMs=0 \
+	   			 		--source=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}_to.genotype.vcf.gz \
+         			   		--nCPU=8 \
             					-o $OUTDIR/4_Tumor_Host_Filtering/"${NAME%.*}"_genotyped.vcf
 
 
@@ -165,20 +165,20 @@ while read NAME; do
 						# Call Using Platypus: Use Regions here	(50bp window)
 
   	                         Platypus.py callVariants \
-			                            --logFileName=$OUTDIR/"${NAME%.*}"_default.log \
+			                --logFileName=$OUTDIR/"${NAME%.*}"_default.log \
         	                        --refFile=$REFERENCE \
-            	                    --bamFiles=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}.bamlist.txt \
+            	                    	--bamFiles=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}.bamlist.txt \
                 	                --minReads=1 \
-                    	            --minFlank=0 \
+                    	            	--minFlank=0 \
                         	        --minBaseQual=30 \
-                            	    --filteredReadsFrac=.8 \
+                            	    	--filteredReadsFrac=.8 \
                                 	--badReadsThreshold=30 \
 	                                --badReadsWindow=15 \
-    	                            --minPosterior=0 \
+    	                            	--minPosterior=0 \
         	                        --getVariantsFromBAMs=0 \
-					                        --regions=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}_varRegions_snvs.txt \
+					--regions=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}_varRegions_snvs.txt \
                 	                --source=$OUTDIR/4_Tumor_Host_Filtering/"${NAME%.*}"_coords.sorted2.vcf.gz \
-                    	            --nCPU=8 \
+                    	            	--nCPU=8 \
                         	        -o $OUTDIR/4_Tumor_Host_Filtering/"${NAME%.*}"_genotyped3.vcf
 
 
@@ -224,8 +224,8 @@ while read NAME; do
 							# Call Using Platypus: Use Regions here	(50bp window)
 
                 		           Platypus.py callVariants \
-		                		            --logFileName=$OUTDIR/"${NAME%.*}"_default.log \
-            		                    --refFile=$REFERENCE \
+		                		--logFileName=$OUTDIR/"${NAME%.*}"_default.log \
+            		                    	--refFile=$REFERENCE \
                 		                --bamFiles=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}.bamlist.txt \
                         		        --minReads=1 \
 		                                --minFlank=0 \
@@ -235,7 +235,7 @@ while read NAME; do
 		                                --badReadsWindow=15 \
 		                                --minPosterior=0 \
 		                                --getVariantsFromBAMs=0 \
-						                        --regions=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}_varRegions_snvs.txt \
+						--regions=$OUTDIR/4_Tumor_Host_Filtering/${NAME%.*}_varRegions_snvs.txt \
 		                                --source=$OUTDIR/4_Tumor_Host_Filtering/"${NAME%.*}"_coords.sorted3.vcf.gz \
 		                                --nCPU=8 \
  		                                -o $OUTDIR/4_Tumor_Host_Filtering/"${NAME%.*}"_genotyped4.vcf
