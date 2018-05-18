@@ -141,17 +141,16 @@ void main(string[] argv)
 
         if (column.position == pos_0based) {
             if (umi) {
-                    auto forward_chunks = column.reads
-                    .sort!((a, b) => a.sequence.to!string[$-5 .. $] < b.sequence.to!string[$-5 .. $])
+                auto forward_chunks = column.reads
+                    .sort!((a, b) => a.sequence.to!string[umi_1based_for .. umi_1based_for+5] < b.sequence.to!string[umi_1based_for .. umi_1based_for+5])
                     .filter!(read => !read.is_reverse_strand())
-                    .chunkBy!((a, b) => a.sequence.to!string[$-5 .. $] == b.sequence.to!string[$-5 .. $]);
-                     // Test:
-                     // 
+                    .chunkBy!((a, b) => a.sequence.to!string[umi_1based_for .. umi_1based_for+5] == b.sequence.to!string[umi_1based_for .. umi_1based_for+5]);
 
                 auto reverse_chunks = column.reads
-                    .sort!((a, b) => a.sequence.to!string[0 .. 5] < b.sequence.to!string[0 .. 5])
+                    .sort!((a, b) => a.sequence.to!string[umi_1based_rev-5 .. umi_1based_rev] < b.sequence.to!string[umi_1based_rev-5 .. umi_1based_rev])
                     .filter!(read => read.is_reverse_strand())
-                    .chunkBy!((a, b) => a.sequence.to!string[0 .. 5] == b.sequence.to!string[0 .. 5]);
+                    .chunkBy!((a, b) => a.sequence.to!string[umi_1based_rev-5 .. umi_1based_rev] == b.sequence.to!string[umi_1based_rev-5 .. umi_1based_rev]);
+                
                 
                 foreach (chunk; forward_chunks) {
                     auto arr = chunk.array;
