@@ -33,8 +33,7 @@ while read FILE; do
 	
 	
 			# 5. Merge Header and SNV VCF
-				cat $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}".metaheader.vcf $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}"_default.snvs.temp.flags.Chromosomes.vcf >$OUTDIR/3_SNV_filtering_individual/"${NAME%.*}
-".snvs.vcf
+				cat $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}".metaheader.vcf $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}"_default.snvs.temp.flags.Chromosomes.vcf >$OUTDIR/3_SNV_filtering_individual/"${NAME%.*}".snvs.vcf
 				rm $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}"_default.snvs.temp.flags.Chromosomes.vcf
 
 	
