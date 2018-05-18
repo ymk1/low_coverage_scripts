@@ -14,20 +14,26 @@ library(aCGH)
                             return.est = TRUE)
 
 
+
+
 # Step 2: Extract Segments and Estimates from the Single-segmentation 
      sseg.gr<-as.data.frame(sseg$segments)[,c(2,4,5,6,1,7)]
      sseg.gr_est<-as.data.frame(sseg$estimates)
     
     
+
+
 # Step 3: Perform Ansari/Bradley Tests (pval<.05) for Preliminary Merging for Each Sample
  for(y in unique(sseg.gr$sampleID)){
       
           message(y)
-  
+      
           sseg.gr_est[,y]<-mergeLevels(tumors.pcf[, y], 
                                           sseg.gr_est[,y], 
                                           verbose = FALSE)$vecMerged
       }
+
+
 
 
 # Step 4: Convert the Data to GRanges Format
@@ -35,7 +41,8 @@ library(aCGH)
                                     GRanges(seqnames = chrom,
                                     IRanges(start = pos, 
                                             end = pos+100000-1)))
-                                                                                      
+    
+
  for(y in unique(sseg.gr$sampleID)){
     
            mcols(sseg.gr_cest)$mean<-sseg.gr_est[,y]
