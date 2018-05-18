@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Step 3: SNV Initial Filtering
+	# BASH Script for Running Preliminary Filter across Individual Sample Variant Calls
 
 INDIR=$1
 OUTDIR=$2
@@ -38,13 +38,11 @@ while read FILE; do
 
 	
 			# 6. Remove SNVs at the Ends of Each Supercontig
-		 			vcfintersect -b $OUTDIR/3_SNV_filtering_individual/supercontigs.bed $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}".snvs.vcf >$OUTDIR/3_SNV_filtering_individual/"${NAME%.*}"_multiallelic.snvs.fi
-ltered.vcf
+		 			vcfintersect -b $OUTDIR/3_SNV_filtering_individual/supercontigs.bed $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}".snvs.vcf >$OUTDIR/3_SNV_filtering_individual/"${NAME%.*}"_multiallelic.snvs.filtered.vcf
 					rm $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}".snvs.vcf
 
 			# 7. Remove SNVs at the Ends of Each Contigs
-		 			vcfintersect -v  -b $OUTDIR/3_SNV_filtering_individual/contigGaps.bed $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}"_multiallelic.snvs.filtered.vcf >$OUTDIR/3_SNV_filtering_individual/"${NAME%.
-*}"_multiallelic.snvs.filtered1.vcf
+		 			vcfintersect -v  -b $OUTDIR/3_SNV_filtering_individual/contigGaps.bed $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}"_multiallelic.snvs.filtered.vcf >$OUTDIR/3_SNV_filtering_individual/"${NAME%.*}"_multiallelic.snvs.filtered1.vcf
 					rm $OUTDIR/3_SNV_filtering_individual/"${NAME%.*}"_multiallelic.snvs.filtered.vcf
 	
 
