@@ -1,5 +1,5 @@
 
-# Multi-segmentation Extract Segments and Estimates
+# Multi-segmentation Extract Segments and Estimates; will rewrite as function
 mseg_gr_list<-list()
 
 for(y in colnames(mcols(mseg_comp))[3:ncol(mcols(mseg_comp))]){
